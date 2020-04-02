@@ -4,8 +4,8 @@ import Todos from "./components/Todos"; //import Todos class!
 import Header from "./components/layout/Header";
 import AddTodo from "./components/AddTodo";
 import About from "./components/pages/About";
-// import { v4 as uuidv4 } from "uuid"; //Uuid is a random id generator on the fly
-import axios from 'axios'
+import { v4 as uuidv4 } from "uuid"; //Uuid is a random id generator on the fly
+// import axios from 'axios'
 
 import "./App.css";
 
@@ -17,10 +17,10 @@ class App extends React.Component {
       //An array of other objects
   };
 
-  componentDidMount(){
-    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=0')
-    .then(res => this.setState({todos: res.data}))
-  }
+  // componentDidMount(){
+  //   axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10')
+  //   .then(res => this.setState({todos: res.data}))
+  // }
 
   //Toggle Complete
   markComplete = id => {
@@ -39,29 +39,31 @@ class App extends React.Component {
   //delete Todo
   delTodo = id => {
     //make a copy of the state of app except this time without the passed id
-    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
-      .then(res =>this.setState({
-        todos: [...this.state.todos.filter(todo => todo.id !== id)]
-      }));
+    // axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+    //   .then(res =>this.setState({
+    //     todos: [...this.state.todos.filter(todo => todo.id !== id)]
+    //   }));
+
+      this.setState({todos: [...this.state.todos.filter(todo => todo.id !== id)]});
   };
 
   // Add Todo
   addTodo = title => {
     // this.setState()
     // console.log(title);  //title was checked here!
-    // const newTodo = {
-    //   //the newTodo consists of these attributes, title that is passed on
-    //   id: uuidv4(),
-    //   title: title,
-    //   completed: false
-    // };
-
-    axios.post('https://jsonplaceholder.typicode.com/todos', {
-      title,
+    const newTodo = {
+      //the newTodo consists of these attributes, title that is passed on
+      id: uuidv4(),
+      title: title,
       completed: false
-    })
-      .then(res => this.setState({ todos:
-         [...this.state.todos, res.data] }));
+    };
+      this.setState({todos: [...this.state.todos, newTodo]});
+    // axios.post('https://jsonplaceholder.typicode.com/todos', {
+    //   title,
+    //   completed: false
+    // })
+    //   .then(res => this.setState({ todos:
+    //      [...this.state.todos, res.data] }));
 
     //this adds a new Todo by
     //copying existing and adding newTodo
@@ -75,7 +77,7 @@ class App extends React.Component {
         <div className="container">
         <Header /> {/*Header Component*/}
         <Route
-          exact path="/"  //{/*This single path will load both of these components*/}
+          exact path="/todo-list"  //{/*This single path will load both of these components*/}
           render={props => (
             <React.Fragment>
               <AddTodo addTodo={this.addTodo} /> {/*This is the Add To Do*/}

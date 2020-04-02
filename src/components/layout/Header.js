@@ -6,7 +6,7 @@ function Header(){
   return(
     <header style={headerStyle}>  {/*see if you can change the style like in App.js where you call it!*/}
     <h1>TodoList</h1>
-    <Link style={linkStyle} to="/">Home</Link> | <Link
+    <Link style={linkStyle} to="/todo-list">Home</Link> | <Link
     style={linkStyle}
     to="/about">About</Link>
     </header>
